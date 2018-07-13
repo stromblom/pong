@@ -116,6 +116,10 @@ namespace Stromblom.Pong
             while (true)
             {
                 Console.SetCursorPosition(0, 0);
+                if (!secondPlayer)
+                    Console.WriteLine("Player 1 uses w/s to move up/down");
+                else
+                    Console.WriteLine("Player 2 uses p/l to move up/down");
                 Console.Write("Name of player {0}: ", secondPlayer ? "two" : "one");
                 playerName = Console.ReadLine();
 

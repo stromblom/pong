@@ -116,3 +116,4 @@ App_Data/*.ldf
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/.vs/Stromblom.Pong/v15/Server/sqlite3
