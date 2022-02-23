@@ -115,6 +115,7 @@ namespace Stromblom.Pong
         {
             Console.ResetColor();
             Console.Clear();
+            Console.SetCursorPosition(0, 0);
         }
 
         private void Reset()
@@ -130,7 +131,6 @@ namespace Stromblom.Pong
             var playerName = String.Empty;
             while (true)
             {
-                Console.SetCursorPosition(0, 0);
                 if (!secondPlayer)
                     Console.WriteLine("Player 1 uses w/s to move up/down");
                 else
@@ -143,7 +143,7 @@ namespace Stromblom.Pong
 
                 Clear();
 
-                Console.WriteLine("Player name must be less then 18 characters long.");
+                Console.WriteLine("Player name must be less then 18 characters long.\n");
             }
 
             return new Player(playerName, secondPlayer);
