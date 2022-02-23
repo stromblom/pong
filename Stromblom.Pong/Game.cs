@@ -49,13 +49,12 @@ namespace Stromblom.Pong
                     Thread.Sleep(115 - _ball.Speed);
                 }
                 _roundEnded = true;
+
+                Player pointScorer = _ball.X <= _playerOne.X ? _playerTwo : _playerOne;
+                pointScorer.Points++;
+                DrawPointScored(pointScorer);
+
                 handleInputTask.Wait();
-
-                if (_ball.X <= _playerOne.X)
-                    _playerTwo.Points++;
-                else
-                    _playerOne.Points++;
-
                 Reset();
             }
             Clear();
@@ -96,10 +95,27 @@ namespace Stromblom.Pong
             }
         }
 
+        private void DrawPointScored(Player scorer)
+        {
+            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            int verticalCenter = (int)(_gameAreaHeight * 0.5f);
+            WriteCentered($" {scorer.Name} scored! ", verticalCenter - 1);
+            WriteCentered(" Press any key to continue ", verticalCenter + 1);
+        }
+
+        private void WriteCentered(string str, int fromTop)
+        {
+            Console.CursorLeft = (int)((_gameAreaWidth * 0.5f) - (str.Length * 0.5f));
+            Console.CursorTop = fromTop;
+            Console.Write(str);
+        }
+
         private void Clear()
         {
             Console.ResetColor();
             Console.Clear();
+            Console.SetCursorPosition(0, 0);
         }
 
         private void Reset()
@@ -115,7 +131,6 @@ namespace Stromblom.Pong
             var playerName = String.Empty;
             while (true)
             {
-                Console.SetCursorPosition(0, 0);
                 if (!secondPlayer)
                     Console.WriteLine("Player 1 uses w/s to move up/down");
                 else
@@ -128,7 +143,7 @@ namespace Stromblom.Pong
 
                 Clear();
 
-                Console.WriteLine("Player name must be less then 18 characters long.");
+                Console.WriteLine("Player name must be less then 18 characters long.\n");
             }
 
             return new Player(playerName, secondPlayer);
