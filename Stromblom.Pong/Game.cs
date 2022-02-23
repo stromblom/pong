@@ -49,13 +49,12 @@ namespace Stromblom.Pong
                     Thread.Sleep(115 - _ball.Speed);
                 }
                 _roundEnded = true;
+
+                Player pointScorer = _ball.X <= _playerOne.X ? _playerTwo : _playerOne;
+                pointScorer.Points++;
+                DrawPointScored(pointScorer);
+
                 handleInputTask.Wait();
-
-                if (_ball.X <= _playerOne.X)
-                    _playerTwo.Points++;
-                else
-                    _playerOne.Points++;
-
                 Reset();
             }
             Clear();
@@ -94,6 +93,22 @@ namespace Stromblom.Pong
                 Console.SetCursorPosition(19 - _playerOne.Points.ToString().Length, 1);
                 Console.Write("{0}  {1}", _playerOne.Points, _playerTwo.Points);
             }
+        }
+
+        private void DrawPointScored(Player scorer)
+        {
+            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            int verticalCenter = (int)(_gameAreaHeight * 0.5f);
+            WriteCentered($" {scorer.Name} scored! ", verticalCenter - 1);
+            WriteCentered(" Press any key to continue ", verticalCenter + 1);
+        }
+
+        private void WriteCentered(string str, int fromTop)
+        {
+            Console.CursorLeft = (int)((_gameAreaWidth * 0.5f) - (str.Length * 0.5f));
+            Console.CursorTop = fromTop;
+            Console.Write(str);
         }
 
         private void Clear()
